@@ -8,13 +8,15 @@ public class NeighborhoodLibrary
     static Scanner scanner = new Scanner(System.in);
     static Book[] arrayBooks = new Book[5];
 
-    // Main
+    // Main method
     public static void main(String[] args)
     {
         loadBooks();
         displayMenu();
     }
 
+    // Create 5 books & add them to the books array
+    // Made some that are already checked out
     public static void loadBooks()
     {
         Book book1 = new Book(0, "17-4928-40062-37", "Harry Potter and the Sorcerer's Stone", false, "NONE");
@@ -29,6 +31,8 @@ public class NeighborhoodLibrary
         arrayBooks[4] = book5;
     }
 
+    // Check out book by ID
+    // Doesn't work if book has already been checked out
     public static void checkOutBook()
     {
         int id = 0;
@@ -38,6 +42,7 @@ public class NeighborhoodLibrary
         id = scanner.nextInt();
         scanner.nextLine();
 
+        // If ID is valid
         if(id <= arrayBooks.length - 1) {
             // If book is available
             if (arrayBooks[id].getCheckedOutTo().equals("NONE")) {
@@ -49,6 +54,7 @@ public class NeighborhoodLibrary
                 System.out.println();
                 System.out.println(name + " checked out " + arrayBooks[id].getTitle() + ".");
             } else {
+                // Display message that book is already checked out
                 System.out.println();
                 System.out.println(arrayBooks[id].getTitle() + " has already been checked out by " + arrayBooks[id].getCheckedOutTo() + ".");
             }
@@ -60,6 +66,8 @@ public class NeighborhoodLibrary
         }
     }
 
+    // Check in book by ID
+    // Doesn't work if book is already checked in
     public static void checkInBook()
     {
         int id = 0;
@@ -68,14 +76,16 @@ public class NeighborhoodLibrary
         id = scanner.nextInt();
         scanner.nextLine();
 
+        // If ID is valid
         if(id <= arrayBooks.length - 1) {
             // If book is checked out by someone
             if (!arrayBooks[id].getCheckedOutTo().equals("NONE")) {
-                // Mark book as checked out
+                // Mark book as available
                 arrayBooks[id].setCheckedOutTo("NONE");
                 System.out.println();
                 System.out.println(arrayBooks[id].getTitle() + " has been returned.");
             } else {
+                // Display message that book is already returned
                 System.out.println();
                 System.out.println(arrayBooks[id].getTitle() + " is already in the library.");
             }
@@ -87,7 +97,7 @@ public class NeighborhoodLibrary
         }
     }
 
-    // Show available books
+    // Show books available for check out
     public static void showAvailableBooks()
     {
         String option = "";
@@ -95,6 +105,8 @@ public class NeighborhoodLibrary
         System.out.println("AVAILABLE BOOKS:\n");
         System.out.println("ID    ISBN                 Title                                     Checked out to");
         System.out.println("-----------------------------------------------------------------------------------");
+
+        // For each book in array, print ID, ISBN, Title, CheckedOutTo
         for (int i = 0; i < arrayBooks.length; i++)
         {
             if(arrayBooks[i] != null && arrayBooks[i].getCheckedOutTo().equals("NONE")) {
@@ -103,13 +115,16 @@ public class NeighborhoodLibrary
             }
         }
 
+        // While user doesn't want to quit
         while(!option.equalsIgnoreCase("X")) {
+            // Display options
             System.out.print("\nWhat do you want to do?\n" +
                     "C) Check out a book\n" +
                     "X) Exit to menu\n");
             System.out.print("Enter an option: ");
             option = scanner.nextLine();
 
+            // Perform based on user input
             if (option.equalsIgnoreCase("C")) {
                 checkOutBook();
             } else if (option.equalsIgnoreCase("X")) {
@@ -121,6 +136,7 @@ public class NeighborhoodLibrary
         }
     }
 
+    // Show books that are already checked out
     public static void showCheckedOutBooks()
     {
         String option = "";
@@ -128,6 +144,8 @@ public class NeighborhoodLibrary
         System.out.println("CHECKED OUT BOOKS:\n");
         System.out.println("ID    ISBN                 Title                                    Checked out to");
         System.out.println("-----------------------------------------------------------------------------------");
+
+        // For each book in array, print ID, ISBN, Title, CheckedOutTo
         for (int i = 0; i < arrayBooks.length; i++)
         {
             if(arrayBooks[i] != null && !arrayBooks[i].getCheckedOutTo().equals("NONE")) {
@@ -136,6 +154,7 @@ public class NeighborhoodLibrary
             }
         }
 
+        // While user doesn't want to quit
         while(!option.equalsIgnoreCase("X")) {
             System.out.print("\nWhat do you want to do?\n" +
                     "C) Return a book\n" +
@@ -143,6 +162,7 @@ public class NeighborhoodLibrary
             System.out.print("Enter an option: ");
             option = scanner.nextLine();
 
+            // Perform based on user input
             if (option.equalsIgnoreCase("C")) {
                 checkInBook();
             } else if (option.equalsIgnoreCase("X")) {
@@ -154,12 +174,14 @@ public class NeighborhoodLibrary
         }
     }
 
+    // Display main menu
     public static void displayMenu()
     {
         int option = 0;
 
         while(option != 3)
         {
+            // Display menu
             System.out.println();
             System.out.println("*-----------------*");
             System.out.println("*----MAIN-MENU----*");
@@ -174,6 +196,7 @@ public class NeighborhoodLibrary
             option = scanner.nextInt();
             scanner.nextLine();
 
+            // Perform based on user input
             switch(option)
             {
                 case 1:
